@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prom-app
+spec:
+  selector:
+    matchLabels:
+      app: prom-app
+  template:
+    metadata:
+      labels:
+        app: prom-app
+    spec:
+      containers:
+      - name: prom-app
+        image: utibeabasi6/prom-app
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3000
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: prom-app
+spec:
+  selector:
+    app: prom-app
+  ports:
+  - port: 3000
+    targetPort: 3000
+
